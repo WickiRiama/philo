@@ -6,14 +6,16 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 12:43:14 by mriant            #+#    #+#              #
-#    Updated: 2022/04/14 13:49:36 by mriant           ###   ########.fr        #
+#    Updated: 2022/04/15 17:27:59 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRCS = ${addprefix srcs/, \
-	main.c}
+	atoi_philo.c \
+	main.c \
+	utils.c}
 
 OBJS = ${SRCS:srcs/%.c=build/%.o}
 
