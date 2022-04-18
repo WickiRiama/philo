@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:37:26 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/15 17:58:15 by mriant           ###   ########.fr       */
+/*   Updated: 2022/04/18 13:43:06 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,7 @@ int	main(int ac, char **av)
 		ft_error("nb_ac", NULL);
 		return (1);
 	}
-	args.nb_eat = -1;
-	if (ac == 6)
-	{
-		args.nb_eat = ft_atoi_philo(av[5]);
-		if (args.nb_eat == -1)
-		{
-			ft_error("Wrong argument ", av[5]);
-			return (1);
-		}
-	}
-	args.nb_philo = ft_atoi_philo(av[1]);
-	args.time_die = ft_atoi_philo(av[2]);
-	args.time_eat = ft_atoi_philo(av[3]);
-	args.time_sleep = ft_atoi_philo(av[4]);
+	if (ft_parse(&args, ac, av) == 1)
+		return (1);
 	return (0);
 }
