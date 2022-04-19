@@ -6,7 +6,7 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 12:43:14 by mriant            #+#    #+#              #
-#    Updated: 2022/04/19 16:21:03 by mriant           ###   ########.fr        #
+#    Updated: 2022/04/19 16:32:26 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ DEPS = ${SRCS:srcs/%.c=build/%.d}
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -pthread -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g -pthread -fsanitize=thread
 
 IFLAGS = -I./includes -MMD -pthread
 
