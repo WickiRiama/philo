@@ -6,7 +6,7 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 12:43:14 by mriant            #+#    #+#              #
-#    Updated: 2022/04/15 17:27:59 by mriant           ###   ########.fr        #
+#    Updated: 2022/04/19 13:15:49 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = philo
 
 SRCS = ${addprefix srcs/, \
 	atoi_philo.c \
+	lists.c \
 	main.c \
+	parsing.c \
 	utils.c}
 
 OBJS = ${SRCS:srcs/%.c=build/%.o}
@@ -23,7 +25,7 @@ DEPS = ${SRCS:srcs/%.c=build/%.d}
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 IFLAGS = -I./includes -MMD
 

@@ -6,10 +6,11 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 13:54:51 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/18 15:55:26 by mriant           ###   ########.fr       */
+/*   Updated: 2022/04/19 12:14:55 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "philo.h"
 
 t_philo	*ft_lstnew(int id)
@@ -18,6 +19,8 @@ t_philo	*ft_lstnew(int id)
 
 	new = malloc(sizeof(t_philo));
 	if (!new)
+		return (NULL);
+	if (pthread_mutex_init(&new->fork_mutex, NULL))
 		return (NULL);
 	new->id = id;
 	new->fork = 0;
@@ -28,12 +31,14 @@ t_philo	*ft_lstnew(int id)
 
 int	ft_lstsize(t_philo *lst)
 {
-	int	i;
+	int		i;
+	t_philo	*first;
 
-	i = 0;
 	if (!lst)
-		return (i);
-	while (lst)
+		return (0);
+	i = 1;
+	first = lst;
+	while (lst->next && lst->next != first)
 	{
 		i++;
 		lst = lst->next;
@@ -45,7 +50,7 @@ t_philo	*ft_lstlast(t_philo *lst)
 {
 	if (!lst)
 		return (NULL);
-	while (lst->next)
+	while (lst->next && lst->id < lst->next->id)
 		lst = lst->next;
 	return (lst);
 }
@@ -61,29 +66,28 @@ void	ft_lstadd_back(t_philo **alst, t_philo *new)
 		last = ft_lstlast(*alst);
 		last->next = new;
 		new->prev = last;
+		new->next = *alst;
+		(*alst)->prev = new;
 	}
 }
 
-void	ft_lstdelone(t_philo *lst, void (*del)(void *))
-{
-	if (del)
-		del(lst->content);
-	if (lst->prev)
-		lst->prev->next = NULL;
-	free(lst);
-}
-
-void	ft_lstclear(t_philo **lst, void (*del)(void *))
+void	ft_lstclear(t_philo **lst)
 {
 	t_philo	*temp1;
 	t_philo	*temp2;
+	int		i;
+	int		size;
 
 	temp2 = *lst;
-	while (temp2)
+	i = 0;
+	size = ft_lstsize(*lst);
+	while (i < size)
 	{
 		temp1 = temp2->next;
-		ft_lstdelone(temp2, del);
+		pthread_mutex_destroy(&temp2->fork_mutex);
+		free(temp2);
 		temp2 = temp1;
+		i++;
 	}
 	*lst = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:37:26 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/18 15:58:42 by mriant           ###   ########.fr       */
+/*   Updated: 2022/04/19 13:15:23 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,14 @@ int	main(int ac, char **av)
 {
 	t_main	args;
 	t_philo	*philos;
-	t_philo	*new;
-	int		i;
 
 	if (ac < 5 || ac > 6)
 	{
 		ft_error("nb_ac", NULL);
 		return (1);
 	}
-	if (ft_parse(&args, ac, av) == 1)
+	if (ft_parse(&args, ac, av) || ft_makelist(&philos, args.nb_philo))
 		return (1);
-	i = 0;
-	while (i < args.nb_philo)
-	{
-		new = ft_lstnew
-	}
+	ft_lstclear(&philos);
 	return (0);
 }
