@@ -6,10 +6,11 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 12:16:40 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/19 13:15:12 by mriant           ###   ########.fr       */
+/*   Updated: 2022/04/19 16:01:24 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "philo.h"
 
 int	ft_parse(t_main *args, int ac, char **av)
@@ -39,23 +40,39 @@ int	ft_parse(t_main *args, int ac, char **av)
 	return (0);
 }
 
-int	ft_makelist(t_philo **philos, int nb_philos)
+int	ft_makelist(t_philo **philos, t_main *args)
 {
 	int		i;
 	t_philo	*new;
 
 	i = 1;
 	*philos = NULL;
-	while (i < nb_philos + 1)
+	while (i < args->nb_philo + 1)
 	{
 		new = ft_lstnew(i);
 		if (!new)
 		{
+			ft_error("Malloc error ", "");
 			ft_lstclear(philos);
 			return (1);
 		}
+		new->args = args;
 		ft_lstadd_back(philos, new);
 		i++;
 	}
+	return (0);
+}
+
+int	ft_init_time(t_main *args, t_philo *philos)
+{
+	args->tv = malloc(sizeof(struct timeval) * 1);
+	if (!args->tv)
+	{
+		ft_error("Malloc error ", "");
+		ft_lstclear(&philos);
+		return (1);
+	}
+	gettimeofday(args->tv, NULL);
+	args->start_time = (args->tv->tv_sec * 1000000 + args->tv->tv_usec) / 1000;
 	return (0);
 }

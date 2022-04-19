@@ -6,11 +6,12 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:32:13 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/19 12:17:01 by mriant           ###   ########.fr       */
+/*   Updated: 2022/04/19 14:16:22 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 #include "philo.h"
 
 int	ft_strlen(char *str)
@@ -53,4 +54,11 @@ void	ft_error(char *str1, char *str2)
 		write(2, str2, ft_strlen(str2));
 		write(2, "\n", 1);
 	}
+}
+
+void	ft_print_time(t_main args)
+{
+	gettimeofday(args.tv, NULL);
+	printf("%ld\n", (args.tv->tv_sec * 1000000 + args.tv->tv_usec)
+		/ 1000 - args.start_time);
 }
