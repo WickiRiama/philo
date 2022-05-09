@@ -6,14 +6,16 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 12:43:14 by mriant            #+#    #+#              #
-#    Updated: 2022/04/19 16:32:26 by mriant           ###   ########.fr        #
+#    Updated: 2022/05/09 16:46:01 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRCS = ${addprefix srcs/, \
+	actions.c \
 	atoi_philo.c \
+	clean.c \
 	lists.c \
 	main.c \
 	parsing.c \

@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 12:16:40 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/19 16:01:24 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/09 18:02:57 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ int	ft_makelist(t_philo **philos, t_main *args)
 	t_philo	*new;
 
 	i = 1;
-	*philos = NULL;
 	while (i < args->nb_philo + 1)
 	{
 		new = ft_lstnew(i);
 		if (!new)
 		{
 			ft_error("Malloc error ", "");
-			ft_lstclear(philos);
 			return (1);
 		}
 		new->args = args;
@@ -63,16 +61,34 @@ int	ft_makelist(t_philo **philos, t_main *args)
 	return (0);
 }
 
-int	ft_init_time(t_main *args, t_philo *philos)
+int	ft_init_time(t_main *args)
 {
 	args->tv = malloc(sizeof(struct timeval) * 1);
 	if (!args->tv)
 	{
 		ft_error("Malloc error ", "");
-		ft_lstclear(&philos);
 		return (1);
 	}
 	gettimeofday(args->tv, NULL);
 	args->start_time = (args->tv->tv_sec * 1000000 + args->tv->tv_usec) / 1000;
+	return (0);
+}
+
+int	ft_init_all(t_main *args, t_philo **philos, int ac, char **av)
+{
+	args->tv = NULL;
+	args->nb_philo = 0;
+	if (pthread_mutex_init(&args->print_mutex, NULL))
+	{
+		ft_error("Mutex initialization error ", "");
+		return (1);
+	}
+	if (ft_parse(args, ac, av)
+		|| ft_makelist(philos, args)
+		|| ft_init_time(args))
+	{
+		ft_clean(philos, args, NULL);
+		return (1);
+	}
 	return (0);
 }

@@ -6,11 +6,10 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:32:13 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/19 14:16:22 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/09 18:03:23 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdio.h>
 #include "philo.h"
 
@@ -38,27 +37,14 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-void	ft_error(char *str1, char *str2)
+void	ft_print_time(t_philo *philo, char *str)
 {
-	write(2, "Error: ", 7);
-	if (ft_strcmp(str1, "nb_ac") == 0)
-	{
-		write(2, "Wrong number of arguments\n"
-			"./philo number_of_philosophers time_to_die"
-			" time_to_eat time_to_sleep"
-			" [number_of_times_each_philosopher_must_eat]\n", 140);
-	}
-	else
-	{
-		write(2, str1, ft_strlen(str1));
-		write(2, str2, ft_strlen(str2));
-		write(2, "\n", 1);
-	}
-}
+	long int	ms_time;
 
-void	ft_print_time(t_main args)
-{
-	gettimeofday(args.tv, NULL);
-	printf("%ld ", (args.tv->tv_sec * 1000000 + args.tv->tv_usec)
-		/ 1000 - args.start_time);
+	pthread_mutex_lock(&philo->args->print_mutex);
+	gettimeofday(philo->args->tv, NULL);
+	ms_time = (philo->args->tv->tv_sec * 1000000 + philo->args->tv->tv_usec)
+		/ 1000 - philo->args->start_time;
+	printf("%ld %d %s\n", ms_time, philo->id, str);
+	pthread_mutex_unlock(&philo->args->print_mutex);
 }
