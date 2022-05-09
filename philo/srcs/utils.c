@@ -59,6 +59,6 @@ void	ft_error(char *str1, char *str2)
 void	ft_print_time(t_main args)
 {
 	gettimeofday(args.tv, NULL);
-	printf("%ld\n", (args.tv->tv_sec * 1000000 + args.tv->tv_usec)
+	printf("%ld ", (args.tv->tv_sec * 1000000 + args.tv->tv_usec)
 		/ 1000 - args.start_time);
 }

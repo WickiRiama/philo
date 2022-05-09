@@ -18,6 +18,7 @@
 
 typedef struct s_main
 {
+	pthread_mutex_t	print_mutex;
 	int				nb_eat;
 	int				nb_philo;
 	int				time_die;
