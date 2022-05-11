@@ -18,19 +18,26 @@
 void	*ft_philo(void *philos_void)
 {
 	t_philo			*philos;
-	struct timeval	tv;
 
 	philos = (t_philo *) philos_void;
-	philos->last_eat = gettimeofday(&tv, NULL);
+	philos->last_eat = philos->args->start_time;
 	if (philos->id % 2 == 0)
-		usleep(200);
+		usleep((philos->args->time_eat * 500));
 	while (1)
 	{
-		ft_take_fork(philos, 1);
-		ft_take_fork(philos->prev, 2);
-		ft_eat(philos, &tv);
+		if (ft_take_fork(philos, 1))
+			return (NULL);
+		if (ft_take_fork(philos->prev, 2))
+			return (NULL);
+		if (ft_eat(philos))
+			return (NULL);
+		if (ft_died(philos))
+			return (NULL);
 		ft_print_time(philos, "is sleeping");
-		usleep(philos->args->time_sleep * 1000);
+		if (ft_usleep(philos->args->time_sleep, philos))
+			return (NULL);
+		if (ft_died(philos))
+			return (NULL);
 		ft_print_time(philos, "is thinking");
 	}
 	return (NULL);
@@ -43,6 +50,7 @@ int	ft_threads_init(pthread_t *tab, t_main *args, t_philo *philos)
 
 	i = 0;
 	temp = philos;
+	ft_init_time(args);
 	while (temp && i < args->nb_philo)
 	{
 		if (pthread_create(&tab[i], NULL, &ft_philo, temp))

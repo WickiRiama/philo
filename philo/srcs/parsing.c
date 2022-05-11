@@ -61,31 +61,25 @@ int	ft_makelist(t_philo **philos, t_main *args)
 	return (0);
 }
 
-int	ft_init_time(t_main *args)
+void	ft_init_time(t_main *args)
 {
-	args->tv = malloc(sizeof(struct timeval) * 1);
-	if (!args->tv)
-	{
-		ft_error("Malloc error ", "");
-		return (1);
-	}
-	gettimeofday(args->tv, NULL);
-	args->start_time = (args->tv->tv_sec * 1000000 + args->tv->tv_usec) / 1000;
-	return (0);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	args->start_time = ft_gettime();
+	return ;
 }
 
 int	ft_init_all(t_main *args, t_philo **philos, int ac, char **av)
 {
-	args->tv = NULL;
 	args->nb_philo = 0;
-	if (pthread_mutex_init(&args->print_mutex, NULL))
+	if (pthread_mutex_init(&args->print_mutex, NULL)
+		|| pthread_mutex_init(&args->dead_mutex, NULL))
 	{
 		ft_error("Mutex initialization error ", "");
 		return (1);
 	}
-	if (ft_parse(args, ac, av)
-		|| ft_makelist(philos, args)
-		|| ft_init_time(args))
+	if (ft_parse(args, ac, av) || ft_makelist(philos, args))
 	{
 		ft_clean(philos, args, NULL);
 		return (1);

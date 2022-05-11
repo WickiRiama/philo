@@ -35,7 +35,6 @@ void	ft_error(char *str1, char *str2)
 void	ft_clean(t_philo **philos, t_main *args, pthread_t *tab)
 {
 	ft_lstclear(philos);
-	free(args->tv);
 	pthread_mutex_destroy(&args->print_mutex);
 	free(tab);
 }

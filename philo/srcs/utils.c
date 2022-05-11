@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include "philo.h"
 
 int	ft_strlen(char *str)
@@ -37,14 +38,39 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
+long int	ft_gettime(void)
+{
+	struct timeval	tv;
+	long int		ms_time;
+
+	gettimeofday(&tv, NULL);
+	ms_time = (tv.tv_sec * 1000000 + tv.tv_usec) / 1000;
+	return (ms_time);
+}
+
 void	ft_print_time(t_philo *philo, char *str)
 {
 	long int	ms_time;
 
 	pthread_mutex_lock(&philo->args->print_mutex);
-	gettimeofday(philo->args->tv, NULL);
-	ms_time = (philo->args->tv->tv_sec * 1000000 + philo->args->tv->tv_usec)
-		/ 1000 - philo->args->start_time;
+	ms_time = ft_gettime() - philo->args->start_time;
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	pthread_mutex_unlock(&philo->args->print_mutex);
+}
+
+int	ft_usleep(int sleep_time, t_philo *philo)
+{
+	long int	start_time;
+	long int	cur_time;
+
+	start_time = ft_gettime();
+	cur_time = start_time;
+	while (cur_time - start_time < sleep_time)
+	{
+		if (ft_died(philo))
+			return (1);
+		usleep(500);
+		cur_time = ft_gettime();
+	}
+	return (0);
 }
