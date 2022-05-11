@@ -48,29 +48,43 @@ long int	ft_gettime(void)
 	return (ms_time);
 }
 
-void	ft_print_time(t_philo *philo, char *str)
+int	ft_print_time(t_philo *philo, char *str)
 {
 	long int	ms_time;
+	int			result;
 
+	result = 0;
+	pthread_mutex_lock(&philo->args->dead_mutex);
+	if (philo->args->is_dead == 1)
+	{
+		pthread_mutex_unlock(&philo->args->dead_mutex);
+		return (1);
+	}
+	else if (ft_strcmp(str, "died") == 0)
+	{
+		philo->args->is_dead = 1;
+		result = 1;
+	}
+	pthread_mutex_unlock(&philo->args->dead_mutex);
 	pthread_mutex_lock(&philo->args->print_mutex);
 	ms_time = ft_gettime() - philo->args->start_time;
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	pthread_mutex_unlock(&philo->args->print_mutex);
+	return (result);
 }
 
 int	ft_usleep(int sleep_time, t_philo *philo)
 {
-	long int	start_time;
 	long int	cur_time;
 
-	start_time = ft_gettime();
-	cur_time = start_time;
-	while (cur_time - start_time < sleep_time)
+	cur_time = ft_gettime();
+	if (cur_time + sleep_time - philo->last_eat > philo->args->time_die)
 	{
-		if (ft_died(philo))
-			return (1);
-		usleep(500);
-		cur_time = ft_gettime();
+		usleep((cur_time - philo->last_eat + philo->args->time_die) * 1000);
+		ft_print_time(philo, "died");
+		return (1);
 	}
+	else
+		usleep(sleep_time * 1000);
 	return (0);
 }

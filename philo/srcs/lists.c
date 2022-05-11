@@ -60,7 +60,11 @@ void	ft_lstadd_back(t_philo **alst, t_philo *new)
 	t_philo	*last;
 
 	if (!(*alst))
+	{
 		*alst = new;
+		new->next = new;
+		new->prev = new;
+	}
 	else
 	{
 		last = ft_lstlast(*alst);

@@ -2,3 +2,4 @@
 *.a
 build
 philo/philo
+log
