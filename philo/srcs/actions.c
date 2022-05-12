@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:18:03 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/09 16:31:06 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/12 18:56:28 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ int	ft_eat(t_philo *philos)
 	return (0);
 }
 
+int	ft_is_finished(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->args->dead_mutex);
+	if (philo->args->is_dead == 1)
+	{
+		pthread_mutex_unlock(&philo->args->dead_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->args->dead_mutex);
+	pthread_mutex_lock(&philo->args->finish_mutex);
+	if (philo->args->has_finished == philo->args->nb_philo)
+	{
+		pthread_mutex_unlock(&philo->args->finish_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->args->finish_mutex);
+
+	return (0);
+}
+
 int	ft_take_fork(t_philo *philos, int is_prev)
 {
 	t_philo	*cur_philo;
@@ -46,7 +66,7 @@ int	ft_take_fork(t_philo *philos, int is_prev)
 		cur_philo = philos;
 	while (1)
 	{
-		if (ft_usleep(1, cur_philo))
+		if (ft_usleep(1, cur_philo) || ft_is_finished(philos))
 			return (1);
 		pthread_mutex_lock(&philos->fork_mutex);
 		if (philos->fork == 0)

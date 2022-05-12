@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:32:13 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/09 18:03:23 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/12 18:26:33 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,14 @@ int	ft_print_time(t_philo *philo, char *str)
 	int			result;
 
 	result = 0;
+	pthread_mutex_lock(&philo->args->print_mutex);
+	// fprintf(stderr, "avant dead mutex\n");
 	pthread_mutex_lock(&philo->args->dead_mutex);
 	if (philo->args->is_dead == 1)
 	{
 		pthread_mutex_unlock(&philo->args->dead_mutex);
+		pthread_mutex_unlock(&philo->args->print_mutex);
+		// fprintf(stderr, "fin dead\n");	
 		return (1);
 	}
 	else if (ft_strcmp(str, "died") == 0)
@@ -66,17 +70,22 @@ int	ft_print_time(t_philo *philo, char *str)
 		result = 1;
 	}
 	pthread_mutex_unlock(&philo->args->dead_mutex);
+	// fprintf(stderr, "avant finish mutex\n");
 	pthread_mutex_lock(&philo->args->finish_mutex);
 	if (philo->args->has_finished == philo->args->nb_philo)
 	{
 		pthread_mutex_unlock(&philo->args->finish_mutex);
+		// fprintf(stderr, "fin finish\n");	
+		pthread_mutex_unlock(&philo->args->print_mutex);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->args->finish_mutex);
+	// fprintf(stderr, "avant print mutex\n");
 	ms_time = ft_gettime() - philo->args->start_time;
-	pthread_mutex_lock(&philo->args->print_mutex);
+	// pthread_mutex_lock(&philo->args->print_mutex);
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	pthread_mutex_unlock(&philo->args->print_mutex);
+	// fprintf(stderr, "fin print\n");	
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:37:26 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/09 18:28:37 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/12 18:44:21 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,35 @@ void	*ft_philo(void *philos_void)
 	while (1)
 	{
 		if (ft_take_fork(philos, 1))
+		{
+			fprintf(stderr, "%d returned after taking fork 1\n", philos->id);
 			return (NULL);
+		}
 		if (ft_take_fork(philos->prev, 2))
+		{
+			fprintf(stderr, "%d returned after taking fork 2\n", philos->id);
 			return (NULL);
+		}
 		if (ft_eat(philos))
+		{
+			fprintf(stderr, "%d returned after eating\n", philos->id);
 			return (NULL);
+		}
 		if (ft_print_time(philos, "is sleeping"))
+		{
+			fprintf(stderr, "%d returned falling sleeping\n", philos->id);
 			return (NULL);
+		}
 		if (ft_usleep(philos->args->time_sleep, philos))
+		{
+			fprintf(stderr, "%d returned after sleeping\n", philos->id);
 			return (NULL);
-		if (ft_print_time(philos, "is thinking"))
+		}
+				if (ft_print_time(philos, "is thinking"))
+		{
+			fprintf(stderr, "%d returned after thinking\n", philos->id);
 			return (NULL);
+		}
 	}
 	return (NULL);
 }
