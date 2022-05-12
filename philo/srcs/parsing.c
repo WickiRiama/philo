@@ -73,8 +73,10 @@ void	ft_init_time(t_main *args)
 int	ft_init_all(t_main *args, t_philo **philos, int ac, char **av)
 {
 	args->nb_philo = 0;
+	args->has_finished = 0;
 	if (pthread_mutex_init(&args->print_mutex, NULL)
-		|| pthread_mutex_init(&args->dead_mutex, NULL))
+		|| pthread_mutex_init(&args->dead_mutex, NULL)
+		|| pthread_mutex_init(&args->finish_mutex, NULL))
 	{
 		ft_error("Mutex initialization error ", "");
 		return (1);

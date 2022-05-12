@@ -66,6 +66,13 @@ int	ft_print_time(t_philo *philo, char *str)
 		result = 1;
 	}
 	pthread_mutex_unlock(&philo->args->dead_mutex);
+	pthread_mutex_lock(&philo->args->finish_mutex);
+	if (philo->args->has_finished == philo->args->nb_philo)
+	{
+		pthread_mutex_unlock(&philo->args->finish_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->args->finish_mutex);
 	ms_time = ft_gettime() - philo->args->start_time;
 	pthread_mutex_lock(&philo->args->print_mutex);
 	printf("%ld %d %s\n", ms_time, philo->id, str);

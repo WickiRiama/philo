@@ -24,6 +24,7 @@ t_philo	*ft_lstnew(int id)
 		return (NULL);
 	new->id = id;
 	new->fork = 0;
+	new->nb_meal = 0;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);

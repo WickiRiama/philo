@@ -36,5 +36,7 @@ void	ft_clean(t_philo **philos, t_main *args, pthread_t *tab)
 {
 	ft_lstclear(philos);
 	pthread_mutex_destroy(&args->print_mutex);
+	pthread_mutex_destroy(&args->dead_mutex);
+	pthread_mutex_destroy(&args->finish_mutex);
 	free(tab);
 }

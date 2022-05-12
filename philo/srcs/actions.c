@@ -18,6 +18,13 @@ int	ft_eat(t_philo *philos)
 	if (ft_print_time(philos, "is eating"))
 		return (1);
 	philos->last_eat = ft_gettime();
+	philos->nb_meal++;
+	if (philos->nb_meal == philos->args->nb_eat)
+	{
+		pthread_mutex_lock(&philos->args->finish_mutex);
+		philos->args->has_finished++;
+		pthread_mutex_unlock(&philos->args->finish_mutex);
+	}
 	if (ft_usleep(philos->args->time_eat, philos))
 		return (1);
 	pthread_mutex_lock(&philos->fork_mutex);
@@ -39,7 +46,8 @@ int	ft_take_fork(t_philo *philos, int is_prev)
 		cur_philo = philos;
 	while (1)
 	{
-		ft_usleep(1, cur_philo);
+		if (ft_usleep(1, cur_philo))
+			return (1);
 		pthread_mutex_lock(&philos->fork_mutex);
 		if (philos->fork == 0)
 		{

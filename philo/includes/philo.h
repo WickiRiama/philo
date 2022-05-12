@@ -20,12 +20,14 @@ typedef struct s_main
 {
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	finish_mutex;
 	int				nb_eat;
 	int				nb_philo;
 	int				time_die;
 	int				time_sleep;
 	int				time_eat;
 	int				is_dead;
+	int				has_finished;
 	long int		start_time;
 }			t_main;
 typedef struct s_philo
@@ -33,6 +35,7 @@ typedef struct s_philo
 	pthread_mutex_t	fork_mutex;
 	int				id;
 	int				fork;
+	int				nb_meal;
 	long int		last_eat;
 	struct s_philo	*prev;
 	struct s_philo	*next;
