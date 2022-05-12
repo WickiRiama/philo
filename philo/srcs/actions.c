@@ -39,7 +39,7 @@ int	ft_take_fork(t_philo *philos, int is_prev)
 		cur_philo = philos;
 	while (1)
 	{
-		ft_usleep(0, cur_philo);
+		ft_usleep(1, cur_philo);
 		pthread_mutex_lock(&philos->fork_mutex);
 		if (philos->fork == 0)
 		{

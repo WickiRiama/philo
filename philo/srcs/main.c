@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <stdio.h>
 #include "philo.h"
 
 void	*ft_philo(void *philos_void)

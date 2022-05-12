@@ -66,8 +66,8 @@ int	ft_print_time(t_philo *philo, char *str)
 		result = 1;
 	}
 	pthread_mutex_unlock(&philo->args->dead_mutex);
-	pthread_mutex_lock(&philo->args->print_mutex);
 	ms_time = ft_gettime() - philo->args->start_time;
+	pthread_mutex_lock(&philo->args->print_mutex);
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	pthread_mutex_unlock(&philo->args->print_mutex);
 	return (result);
@@ -80,7 +80,7 @@ int	ft_usleep(int sleep_time, t_philo *philo)
 	cur_time = ft_gettime();
 	if (cur_time + sleep_time - philo->last_eat > philo->args->time_die)
 	{
-		usleep((cur_time - philo->last_eat + philo->args->time_die) * 1000);
+		usleep((philo->last_eat + philo->args->time_die - cur_time) * 1000);
 		ft_print_time(philo, "died");
 		return (1);
 	}

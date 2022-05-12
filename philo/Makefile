@@ -27,7 +27,7 @@ DEPS = ${SRCS:srcs/%.c=build/%.d}
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -pthread -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g -pthread #-fsanitize=thread
 
 IFLAGS = -I./includes -MMD -pthread
 
