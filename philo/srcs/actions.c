@@ -66,7 +66,7 @@ int	ft_take_fork(t_philo *philos, int is_prev)
 		cur_philo = philos;
 	while (1)
 	{
-		if (ft_usleep(1, cur_philo) || ft_is_finished(philos))
+		if (ft_usleep(0, cur_philo) || ft_is_finished(cur_philo))
 			return (1);
 		pthread_mutex_lock(&philos->fork_mutex);
 		if (philos->fork == 0)
