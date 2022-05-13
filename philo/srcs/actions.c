@@ -52,7 +52,6 @@ int	ft_is_finished(t_philo *philo)
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->args->finish_mutex);
-
 	return (0);
 }
 

@@ -23,40 +23,22 @@ void	*ft_philo(void *philos_void)
 	philos = (t_philo *) philos_void;
 	philos->last_eat = philos->args->start_time;
 	if (philos->id % 2 == 0)
-		if (ft_usleep(philos->args->time_eat, philos))
+		if (ft_usleep(philos->args->time_eat - 1, philos))
 			return (NULL);
 	while (1)
 	{
 		if (ft_take_fork(philos, 1))
-		{
-			fprintf(stderr, "%d returned after taking fork 1\n", philos->id);
 			return (NULL);
-		}
 		if (ft_take_fork(philos->prev, 2))
-		{
-			fprintf(stderr, "%d returned after taking fork 2\n", philos->id);
 			return (NULL);
-		}
 		if (ft_eat(philos))
-		{
-			fprintf(stderr, "%d returned after eating\n", philos->id);
 			return (NULL);
-		}
 		if (ft_print_time(philos, "is sleeping"))
-		{
-			fprintf(stderr, "%d returned falling sleeping\n", philos->id);
 			return (NULL);
-		}
 		if (ft_usleep(philos->args->time_sleep, philos))
-		{
-			fprintf(stderr, "%d returned after sleeping\n", philos->id);
 			return (NULL);
-		}
-				if (ft_print_time(philos, "is thinking"))
-		{
-			fprintf(stderr, "%d returned after thinking\n", philos->id);
+		if (ft_print_time(philos, "is thinking"))
 			return (NULL);
-		}
 	}
 	return (NULL);
 }

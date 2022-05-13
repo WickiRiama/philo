@@ -50,6 +50,7 @@ void		ft_error(char *str1, char *str2);
 long int	ft_gettime(void);
 int			ft_init_all(t_main *args, t_philo **philos, int ac, char **av);
 void		ft_init_time(t_main *args);
+int			ft_is_finished(t_philo *philo);
 void		ft_lstadd_back(t_philo **alst, t_philo *new);
 void		ft_lstclear(t_philo **lst);
 t_philo		*ft_lstnew(int id);

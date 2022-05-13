@@ -56,39 +56,20 @@ int	ft_print_time(t_philo *philo, char *str)
 	result = 0;
 	pthread_mutex_lock(&philo->args->print_mutex);
 	ms_time = ft_gettime() - philo->args->start_time;
-	fprintf(stderr, "prinnt avant dead mutex\n");
-	pthread_mutex_lock(&philo->args->dead_mutex);
-	fprintf(stderr, "str to print %s\n", str);
-	if (philo->args->is_dead == 1)
+	if (ft_is_finished(philo))
 	{
-		fprintf(stderr, "wrong if dead\n");
-		pthread_mutex_unlock(&philo->args->dead_mutex);
 		pthread_mutex_unlock(&philo->args->print_mutex);
-		// fprintf(stderr, "fin dead\n");	
 		return (1);
 	}
-	else if (ft_strcmp(str, "died") == 0)
+	pthread_mutex_lock(&philo->args->dead_mutex);
+	if (ft_strcmp(str, "died") == 0)
 	{
-		fprintf(stderr, "good else dead\n");
 		philo->args->is_dead = 1;
 		result = 1;
 	}
 	pthread_mutex_unlock(&philo->args->dead_mutex);
-	fprintf(stderr, "print avant finish mutex\n");
-	pthread_mutex_lock(&philo->args->finish_mutex);
-	if (philo->args->has_finished == philo->args->nb_philo)
-	{
-		pthread_mutex_unlock(&philo->args->finish_mutex);
-		fprintf(stderr, "print fin finish\n");	
-		pthread_mutex_unlock(&philo->args->print_mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->args->finish_mutex);
-	fprintf(stderr, "prnt apres finish mutex\n");
-	// pthread_mutex_lock(&philo->args->print_mutex);
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	pthread_mutex_unlock(&philo->args->print_mutex);
-	fprintf(stderr, "fin print %d\n", result);	
 	return (result);
 }
 
@@ -97,20 +78,15 @@ int	ft_usleep(int sleep_time, t_philo *philo)
 	long int	cur_time;
 
 	cur_time = ft_gettime();
-	fprintf(stderr, "%ld %d start usleep\n", cur_time - philo->args->start_time, philo->id);
 	if (cur_time + sleep_time - philo->last_eat > philo->args->time_die)
 	{
-		fprintf(stderr, "%d usleep dead, last eat : %ld, time die : %d, cur_time : %ld\n", philo->id, philo->last_eat, philo->args->time_die, cur_time);
 		if (philo->last_eat + philo->args->time_die - cur_time > 0)
 			usleep((philo->last_eat + philo->args->time_die - cur_time) * 1000);
-		fprintf(stderr, "%d after usleep dead befor print\n", philo->id);
 		ft_print_time(philo, "died");
-		fprintf(stderr, "%d usleep dead after print\n", philo->id);
 		return (1);
 	}
 	else
 	{
-		fprintf(stderr, "%d usleep ok\n", philo->id);
 		usleep(sleep_time * 1000);
 	}
 	return (0);
