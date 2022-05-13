@@ -74,6 +74,7 @@ int	ft_init_all(t_main *args, t_philo **philos, int ac, char **av)
 {
 	args->nb_philo = 0;
 	args->has_finished = 0;
+	args->is_dead = 0;
 	if (pthread_mutex_init(&args->print_mutex, NULL)
 		|| pthread_mutex_init(&args->dead_mutex, NULL)
 		|| pthread_mutex_init(&args->finish_mutex, NULL))

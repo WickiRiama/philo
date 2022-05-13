@@ -76,18 +76,18 @@ int	ft_print_time(t_philo *philo, char *str)
 int	ft_usleep(int sleep_time, t_philo *philo)
 {
 	long int	cur_time;
+	int			time_to_die;
 
 	cur_time = ft_gettime();
 	if (cur_time + sleep_time - philo->last_eat > philo->args->time_die)
 	{
-		if (philo->last_eat + philo->args->time_die - cur_time > 0)
-			usleep((philo->last_eat + philo->args->time_die - cur_time) * 1000);
+		time_to_die = philo->last_eat + philo->args->time_die - cur_time;
+		if (time_to_die > 0)
+			usleep(time_to_die * 1000);
 		ft_print_time(philo, "died");
 		return (1);
 	}
 	else
-	{
 		usleep(sleep_time * 1000);
-	}
 	return (0);
 }
