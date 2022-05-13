@@ -19,14 +19,14 @@ int	ft_eat(t_philo *philos)
 		return (1);
 	philos->last_eat = ft_gettime();
 	philos->nb_meal++;
+	if (ft_usleep(philos->args->time_eat, philos))
+		return (1);
 	if (philos->nb_meal == philos->args->nb_eat)
 	{
 		pthread_mutex_lock(&philos->args->finish_mutex);
 		philos->args->has_finished++;
 		pthread_mutex_unlock(&philos->args->finish_mutex);
 	}
-	if (ft_usleep(philos->args->time_eat, philos))
-		return (1);
 	pthread_mutex_lock(&philos->fork_mutex);
 	philos->fork = 0;
 	pthread_mutex_unlock(&philos->fork_mutex);
