@@ -61,13 +61,13 @@ int	ft_print_time(t_philo *philo, char *str)
 		pthread_mutex_unlock(&philo->args->print_mutex);
 		return (1);
 	}
-	pthread_mutex_lock(&philo->args->dead_mutex);
 	if (ft_strcmp(str, "died") == 0)
 	{
+		pthread_mutex_lock(&philo->args->dead_mutex);
 		philo->args->is_dead = 1;
+		pthread_mutex_unlock(&philo->args->dead_mutex);
 		result = 1;
 	}
-	pthread_mutex_unlock(&philo->args->dead_mutex);
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	pthread_mutex_unlock(&philo->args->print_mutex);
 	return (result);
