@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:02:12 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/17 17:45:02 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/18 16:51:39 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,35 @@ void	ft_init_time(t_main *args)
 	return ;
 }
 
+int	ft_init_semaphore(t_main *args)
+{
+	sem_unlink("sem_fork");
+	sem_unlink("sem_print");
+	sem_unlink("sem_finished");
+	args->sem_forks = sem_open("sem_fork", O_CREAT, 0644, args->nb_philo);
+	args->sem_print = sem_open("sem_print", O_CREAT, 0644, 1);
+	args->sem_finished = sem_open("sem_finished", O_CREAT, 0644, 0);
+	if (args->sem_forks == SEM_FAILED
+		|| args->sem_print == SEM_FAILED
+		|| args->sem_finished == SEM_FAILED)
+	{
+		printf("Semaphore error %s\n", strerror(errno));
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_init_all(t_main *args, t_philo **philos, int ac, char **av)
 {
 	args->nb_philo = 0;
 	args->has_finished = 0;
 	args->is_dead = 0;
-	args->sem_forks = sem_open("sem_fork", O_CREAT, "00777", args->nb_philo);
-	if (args->sem_forks == SEM_FAILED)
-	{
-		printf("Semaphore error %s\n", strerror(errno));
-		ft_error("Semaphore initialization error ", "");
-		return (1);
-	}
-	sem_unlink("sem_fork");
 	if (ft_parse(args, ac, av) || ft_makelist(philos, args))
 	{
 		ft_clean(philos, args, NULL);
 		return (1);
 	}
+	if (ft_init_semaphore(args))
+		return (1);
 	return (0);
 }

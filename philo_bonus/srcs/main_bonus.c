@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:01:55 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/17 17:16:19 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/18 17:04:06 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <fcntl.h>
 #include "philo_bonus.h"
 
 void	*ft_philo(void *philos_void)
@@ -63,7 +64,7 @@ int	ft_children_init(pid_t *tab, t_main *args, t_philo *philos)
 			return (1);
 		}
 		if (tab[i] == 0)
-			ft_philo(philos);
+			ft_philo(temp);
 		temp = temp->next;
 		i++;
 	}
@@ -85,7 +86,7 @@ void	ft_children_kill(t_main *args, pid_t *tab)
 	while (i < args->nb_philo)
 	{
 		if (tab[i] != stopped_pid)
-			if (kill(tab[i], SIGKILL) == -1)
+			if (kill(tab[i], SIGTERM) == -1)
 				ft_error("Killimg children error", "");
 		i++;
 	}

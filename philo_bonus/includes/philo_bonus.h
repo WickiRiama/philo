@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:13:41 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/17 17:14:35 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/18 16:46:01 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 
 typedef struct s_main
 {
-	sem_t		*sem_forks;
+	sem_t		*sem_forks;	
+	sem_t		*sem_print;
+	sem_t		*sem_finished;
 	int			nb_eat;
 	int			nb_philo;
 	int			time_die;
