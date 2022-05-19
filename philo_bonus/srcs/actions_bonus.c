@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:15:14 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/18 16:58:13 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/19 13:35:24 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,26 @@ int	ft_eat(t_philo *philos)
 	if (ft_usleep(philos->args->time_eat, philos))
 		return (1);
 	if (philos->nb_meal == philos->args->nb_eat)
-		philos->args->has_finished++;
+		sem_post(philos->args->sem_finished);
 	sem_post(philos->args->sem_forks);
 	sem_post(philos->args->sem_forks);
 	return (0);
 }
 
-int	ft_is_finished(t_philo *philo)
+void	*ft_is_finished(void *args_void)
 {
-	if (philo->args->is_dead == 1)
-		return (1);
-	if (philo->args->has_finished == philo->args->nb_philo)
-		return (1);
-	return (0);
+	int		i;
+	t_main	*args;
+
+	i = 0;
+	args = (t_main *)args_void;
+	while (i < args->nb_philo)
+	{
+		sem_wait(args->sem_finished);
+		i++;
+	}
+	ft_children_kill(args);
+	return (NULL);
 }
 
 int	ft_take_fork(t_philo *philos)

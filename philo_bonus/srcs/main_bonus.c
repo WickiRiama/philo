@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:01:55 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/18 17:04:06 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/19 13:22:30 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*ft_philo(void *philos_void)
 	exit(0);
 }
 
-int	ft_children_init(pid_t *tab, t_main *args, t_philo *philos)
+int	ft_children_init(t_main *args, t_philo *philos)
 {
 	int		i;
 	t_philo	*temp;
@@ -56,14 +56,14 @@ int	ft_children_init(pid_t *tab, t_main *args, t_philo *philos)
 	ft_init_time(args);
 	while (temp && i < args->nb_philo)
 	{
-		tab[i] = fork();
-		if (tab[i] == -1)
+		args->tab[i] = fork();
+		if (args->tab[i] == -1)
 		{
 			ft_error("Child creating error", "");
-			ft_clean(&philos, args, tab);
+			ft_clean(&philos, args);
 			return (1);
 		}
-		if (tab[i] == 0)
+		if (args->tab[i] == 0)
 			ft_philo(temp);
 		temp = temp->next;
 		i++;
@@ -71,23 +71,15 @@ int	ft_children_init(pid_t *tab, t_main *args, t_philo *philos)
 	return (0);
 }
 
-void	ft_children_kill(t_main *args, pid_t *tab)
+void	ft_children_kill(t_main *args)
 {
 	int		i;
-	pid_t	stopped_pid;
 
-	stopped_pid = waitpid(-1, NULL, 0);
-	if (stopped_pid == -1)
-	{
-		ft_error("Waiting children error", "");
-		return ;
-	}
 	i = 0;
 	while (i < args->nb_philo)
 	{
-		if (tab[i] != stopped_pid)
-			if (kill(tab[i], SIGTERM) == -1)
-				ft_error("Killimg children error", "");
+		if (kill(args->tab[i], SIGTERM) == -1)
+			ft_error("Killing children error", "");
 		i++;
 	}
 	return ;
@@ -95,19 +87,18 @@ void	ft_children_kill(t_main *args, pid_t *tab)
 
 int	ft_children_dealer(t_philo *philos, t_main *args)
 {
-	pid_t	*tab;
+	pthread_t	finish_pid;
 
-	tab = malloc(sizeof(pid_t) * args->nb_philo);
-	if (!tab)
+	if (ft_children_init(args, philos))
+		return (1);
+	if (pthread_create(&finish_pid, NULL, &ft_is_finished, args))
 	{
-		ft_error("Malloc error ", "");
-		ft_clean(&philos, args, tab);
+		ft_error("Thead creation error", "");
+		ft_clean(&philos, args);
 		return (1);
 	}
-	if (ft_children_init(tab, args, philos))
-		return (1);
-	ft_children_kill(args, tab);
-	free(tab);
+	pthread_join(finish_pid, NULL);
+	ft_children_kill(args);
 	return (0);
 }
 
@@ -126,6 +117,6 @@ int	main(int ac, char **av)
 		return (1);
 	if (ft_children_dealer(philos, &args))
 		return (1);
-	ft_clean(&philos, &args, NULL);
+	ft_clean(&philos, &args);
 	return (0);
 }

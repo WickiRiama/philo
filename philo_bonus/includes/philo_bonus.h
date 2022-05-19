@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:13:41 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/18 16:46:01 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/19 11:50:02 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_main
 	sem_t		*sem_forks;	
 	sem_t		*sem_print;
 	sem_t		*sem_finished;
+	sem_t		*sem_all_finished;
 	int			nb_eat;
 	int			nb_philo;
 	int			time_die;
@@ -30,6 +31,7 @@ typedef struct s_main
 	int			is_dead;
 	int			has_finished;
 	long int	start_time;
+	pid_t		*tab;
 }			t_main;
 typedef struct s_philo
 {
@@ -43,14 +45,15 @@ typedef struct s_philo
 }			t_philo;
 
 int			ft_atoi_philo(char *str);
-void		ft_clean(t_philo **philos, t_main *args, pid_t *tab);
+void		ft_children_kill(t_main *args);
+void		ft_clean(t_philo **philos, t_main *args);
 void		ft_died(t_philo *philo);
 int			ft_eat(t_philo *philos);
 void		ft_error(char *str1, char *str2);
 long int	ft_gettime(void);
 int			ft_init_all(t_main *args, t_philo **philos, int ac, char **av);
 void		ft_init_time(t_main *args);
-int			ft_is_finished(t_philo *philo);
+void		*ft_is_finished(void *philo);
 void		ft_lstadd_back(t_philo **alst, t_philo *new);
 void		ft_lstclear(t_philo **lst);
 t_philo		*ft_lstnew(int id);

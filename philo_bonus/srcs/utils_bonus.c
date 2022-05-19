@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:02:33 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/18 17:03:36 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/19 13:34:14 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,25 @@ long int	ft_gettime(void)
 int	ft_print_time(t_philo *philo, char *str)
 {
 	long int	ms_time;
-	int			result;
+	int			i;
 
 	sem_wait(philo->args->sem_print);
-	result = 0;
 	ms_time = ft_gettime() - philo->args->start_time;
-	if (ft_is_finished(philo))
-		return (1);
 	if (ft_strcmp(str, "died") == 0)
 	{
 		philo->args->is_dead = 1;
-		result = 1;
 		printf("%ld %d %s\n", ms_time, philo->id, str);
+		i = 0;
+		while (i < philo->args->nb_philo)
+		{
+			sem_post(philo->args->sem_finished);
+			i++;
+		}
 		return (1);
 	}
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	sem_post(philo->args->sem_print);
-	return (result);
+	return (0);
 }
 
 int	ft_usleep(int sleep_time, t_philo *philo)

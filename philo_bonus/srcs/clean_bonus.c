@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:16:13 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/18 16:52:41 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/19 11:37:45 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,16 @@ void	ft_error(char *str1, char *str2)
 	}
 }
 
-void	ft_clean(t_philo **philos, t_main *args, pid_t *tab)
+void	ft_clean(t_philo **philos, t_main *args)
 {
 	ft_lstclear(philos);
 	sem_unlink("sem_fork");
 	sem_unlink("sem_print");
 	sem_unlink("sem_finished");
+	sem_unlink("sem_all_finished");
 	sem_close(args->sem_forks);
 	sem_close(args->sem_print);
 	sem_close(args->sem_finished);
-	free(tab);
+	sem_close(args->sem_all_finished);
+	free(args->tab);
 }
