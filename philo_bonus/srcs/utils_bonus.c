@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:02:33 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/19 13:34:14 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/19 15:23:03 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ long int	ft_gettime(void)
 	return (ms_time);
 }
 
-int	ft_print_time(t_philo *philo, char *str)
+void	ft_print_time(t_philo *philo, char *str)
 {
 	long int	ms_time;
 	int			i;
@@ -57,7 +57,6 @@ int	ft_print_time(t_philo *philo, char *str)
 	ms_time = ft_gettime() - philo->args->start_time;
 	if (ft_strcmp(str, "died") == 0)
 	{
-		philo->args->is_dead = 1;
 		printf("%ld %d %s\n", ms_time, philo->id, str);
 		i = 0;
 		while (i < philo->args->nb_philo)
@@ -65,14 +64,13 @@ int	ft_print_time(t_philo *philo, char *str)
 			sem_post(philo->args->sem_finished);
 			i++;
 		}
-		return (1);
+		return ;
 	}
 	printf("%ld %d %s\n", ms_time, philo->id, str);
 	sem_post(philo->args->sem_print);
-	return (0);
 }
 
-int	ft_usleep(int sleep_time, t_philo *philo)
+void	ft_usleep(int sleep_time, t_philo *philo)
 {
 	long int	cur_time;
 	int			time_to_die;
@@ -84,9 +82,7 @@ int	ft_usleep(int sleep_time, t_philo *philo)
 		if (time_to_die > 0)
 			usleep(time_to_die * 1000);
 		ft_print_time(philo, "died");
-		return (1);
 	}
 	else
 		usleep(sleep_time * 1000);
-	return (0);
 }

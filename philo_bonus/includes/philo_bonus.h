@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:13:41 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/19 11:50:02 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/19 15:19:42 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ typedef struct s_main
 	int			time_die;
 	int			time_sleep;
 	int			time_eat;
-	int			is_dead;
-	int			has_finished;
 	long int	start_time;
-	pid_t		*tab;
 }			t_main;
 typedef struct s_philo
 {
@@ -39,13 +36,14 @@ typedef struct s_philo
 	int				fork;
 	int				nb_meal;
 	long int		last_eat;
+	pid_t			pid;
 	struct s_philo	*prev;
 	struct s_philo	*next;
 	t_main			*args;
 }			t_philo;
 
 int			ft_atoi_philo(char *str);
-void		ft_children_kill(t_main *args);
+void		ft_children_kill(t_philo *philo);
 void		ft_clean(t_philo **philos, t_main *args);
 void		ft_died(t_philo *philo);
 int			ft_eat(t_philo *philos);
@@ -57,10 +55,10 @@ void		*ft_is_finished(void *philo);
 void		ft_lstadd_back(t_philo **alst, t_philo *new);
 void		ft_lstclear(t_philo **lst);
 t_philo		*ft_lstnew(int id);
-int			ft_print_time(t_philo *philo, char *str);
+void		ft_print_time(t_philo *philo, char *str);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strlen(char *str);
 int			ft_take_fork(t_philo *philos);
-int			ft_usleep(int sleep_time, t_philo *philo);
+void		ft_usleep(int sleep_time, t_philo *philo);
 
 #endif
