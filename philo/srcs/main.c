@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:37:26 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 12:10:27 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:26:56 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	*ft_philo(void *philos_void)
 			return (NULL);
 		if (ft_eat(philos))
 			return (NULL);
-		if (ft_print_time(philos, "is sleeping"))
+		if (ft_print_time(philos, " is sleeping\n"))
 			return (NULL);
 		if (ft_usleep(philos->args->time_sleep, philos))
 			return (NULL);
-		if (ft_print_time(philos, "is thinking"))
+		if (ft_print_time(philos, " is thinking\n"))
 			return (NULL);
 	}
 	return (NULL);

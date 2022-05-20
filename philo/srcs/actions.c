@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:18:03 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 12:09:14 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:27:39 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_eat(t_philo *philos)
 {
-	if (ft_print_time(philos, "is eating"))
+	if (ft_print_time(philos, " is eating\n"))
 		return (1);
 	philos->last_eat = ft_gettime();
 	philos->nb_meal++;
@@ -71,7 +71,7 @@ int	ft_take_fork(t_philo *philos, int is_prev)
 		{
 			philos->fork = 1;
 			pthread_mutex_unlock(&philos->fork_mutex);
-			if (ft_print_time(cur_philo, "has taken a fork"))
+			if (ft_print_time(cur_philo, " has taken a fork\n"))
 				return (1);
 			return (0);
 		}

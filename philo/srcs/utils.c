@@ -6,11 +6,10 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:32:13 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 12:13:19 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 14:04:31 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <sys/time.h>
 #include "philo.h"
@@ -62,14 +61,17 @@ int	ft_print_time(t_philo *philo, char *str)
 		pthread_mutex_unlock(&philo->args->print_mutex);
 		return (1);
 	}
-	if (ft_strcmp(str, "died") == 0)
+	if (ft_strcmp(str, " died\n") == 0)
 	{
 		pthread_mutex_lock(&philo->args->dead_mutex);
 		philo->args->is_dead = 1;
 		pthread_mutex_unlock(&philo->args->dead_mutex);
 		result = 1;
 	}
-	printf("%ld %d %s\n", ms_time, philo->id, str);
+	ft_putnbr_philo(ms_time);
+	write(1, " ", 1);
+	ft_putnbr_philo(philo->id);
+	write(1, str, ft_strlen(str));
 	pthread_mutex_unlock(&philo->args->print_mutex);
 	return (result);
 }
@@ -85,7 +87,7 @@ int	ft_usleep(int sleep_time, t_philo *philo)
 		time_to_die = philo->last_eat + philo->args->time_die - cur_time;
 		if (time_to_die > 0)
 			usleep(time_to_die * 1000);
-		ft_print_time(philo, "died");
+		ft_print_time(philo, " died\n");
 		return (1);
 	}
 	else

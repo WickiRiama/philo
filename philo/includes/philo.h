@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:39:04 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 12:12:43 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:21:27 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void		ft_lstadd_back(t_philo **alst, t_philo *new);
 void		ft_lstclear(t_philo **lst);
 t_philo		*ft_lstnew(int id);
 int			ft_print_time(t_philo *philo, char *str);
+void		ft_putnbr_philo(long int n);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strlen(char *str);
 int			ft_take_fork(t_philo *philos, int is_prev);

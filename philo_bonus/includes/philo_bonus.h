@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:13:41 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 11:19:17 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 14:10:05 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_philo
 int			ft_atoi_philo(char *str);
 void		ft_children_kill(t_philo *philo);
 void		ft_clean(t_philo **philos, t_main *args);
-void			ft_eat(t_philo *philos);
+void		ft_eat(t_philo *philos);
 void		ft_error(char *str1, char *str2);
 long int	ft_gettime(void);
 int			ft_init_all(t_main *args, t_philo **philos, int ac, char **av);

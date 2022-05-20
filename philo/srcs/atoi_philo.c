@@ -6,10 +6,11 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:32:05 by mriant            #+#    #+#             */
-/*   Updated: 2022/04/15 17:32:09 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 14:03:33 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "philo.h"
 
 int	ft_isspace(char c)
@@ -53,4 +54,14 @@ int	ft_atoi_philo(char *str)
 		i++;
 	}
 	return ((int)n);
+}
+
+void	ft_putnbr_philo(long int n)
+{
+	char	c;
+
+	if (n / 10 != 0)
+		ft_putnbr_philo(n / 10);
+	c = n % 10 + '0';
+	write(1, &c, 1);
 }
