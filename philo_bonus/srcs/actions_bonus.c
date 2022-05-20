@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:15:14 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 11:22:31 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 14:45:42 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,9 @@ void	ft_take_fork(t_philo *philos)
 		ft_error("Waiting semaphore error", "");
 	ft_usleep(0, philos);
 	ft_print_time(philos, "has taken a fork");
+	if (philos->args->nb_philo == 1)
+	{
+		ft_usleep(philos->args->time_die, philos);
+		sem_post(philos->args->sem_finished);
+	}
 }

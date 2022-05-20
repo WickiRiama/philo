@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:02:12 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 11:32:20 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 14:49:03 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int	ft_init_all(t_main *args, t_philo **philos, int ac, char **av)
 		ft_clean(philos, args);
 		return (1);
 	}
+	if (args->nb_philo == 0)
+		return (0);
 	if (ft_init_semaphore(args))
 	{
 		ft_clean(philos, args);

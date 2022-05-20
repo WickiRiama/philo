@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:01:55 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/20 11:31:21 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 14:51:14 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	main(int ac, char **av)
 	philos = NULL;
 	if (ft_init_all(&args, &philos, ac, av))
 		return (1);
-	if (ft_children_dealer(philos, &args))
+	if (args.nb_philo != 0 && ft_children_dealer(philos, &args))
 		return (1);
 	ft_clean(&philos, &args);
 	return (0);
