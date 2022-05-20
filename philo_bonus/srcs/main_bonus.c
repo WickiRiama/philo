@@ -6,17 +6,14 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:01:55 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/19 15:21:21 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 11:31:21 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <signal.h>
-#include <fcntl.h>
+#include <pthread.h>
 #include "philo_bonus.h"
 
 void	*ft_philo(void *philos_void)
@@ -29,12 +26,9 @@ void	*ft_philo(void *philos_void)
 		ft_usleep(philos->args->time_eat / 2, philos);
 	while (1)
 	{
-		if (ft_take_fork(philos))
-			exit(0);
-		if (ft_take_fork(philos))
-			exit(0);
-		if (ft_eat(philos))
-			exit(0);
+		ft_take_fork(philos);
+		ft_take_fork(philos);
+		ft_eat(philos);
 		ft_print_time(philos, "is sleeping");
 		ft_usleep(philos->args->time_sleep, philos);
 		ft_print_time(philos, "is thinking");
@@ -81,7 +75,6 @@ void	ft_children_kill(t_philo *philo)
 		i++;
 		temp = temp->next;
 	}
-	return ;
 }
 
 int	ft_children_dealer(t_philo *philos, t_main *args)
@@ -94,6 +87,7 @@ int	ft_children_dealer(t_philo *philos, t_main *args)
 	if (pthread_create(&finish_pid, NULL, &ft_is_finished, philos))
 	{
 		ft_error("Thead creation error", "");
+		ft_children_kill(philos);
 		ft_clean(&philos, args);
 		return (1);
 	}

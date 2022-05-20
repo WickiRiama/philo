@@ -6,13 +6,11 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:16:13 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/19 13:54:02 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 11:14:07 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <semaphore.h>
 #include "philo_bonus.h"
 
 void	ft_error(char *str1, char *str2)

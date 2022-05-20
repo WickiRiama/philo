@@ -6,18 +6,13 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:15:14 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/19 15:20:44 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 11:22:31 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <semaphore.h>
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
 #include "philo_bonus.h"
 
-int	ft_eat(t_philo *philos)
+void	ft_eat(t_philo *philos)
 {
 	ft_print_time(philos, "is eating");
 	philos->last_eat = ft_gettime();
@@ -27,7 +22,6 @@ int	ft_eat(t_philo *philos)
 		sem_post(philos->args->sem_finished);
 	sem_post(philos->args->sem_forks);
 	sem_post(philos->args->sem_forks);
-	return (0);
 }
 
 void	*ft_is_finished(void *philo_void)
@@ -43,15 +37,14 @@ void	*ft_is_finished(void *philo_void)
 		i++;
 	}
 	ft_children_kill(philo);
-	return (NULL);
+	return (0);
 }
 
-int	ft_take_fork(t_philo *philos)
+void	ft_take_fork(t_philo *philos)
 {
 	ft_usleep(0, philos);
 	if (sem_wait(philos->args->sem_forks) == -1)
 		ft_error("Waiting semaphore error", "");
 	ft_usleep(0, philos);
 	ft_print_time(philos, "has taken a fork");
-	return (0);
 }

@@ -6,18 +6,12 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 16:02:12 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/19 15:16:12 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 11:32:20 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <fcntl.h>
-#include <sys/stat.h>
-#include <semaphore.h>
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-
+#include <sys/time.h>
 #include "philo_bonus.h"
 
 int	ft_parse(t_main *args, int ac, char **av)
@@ -72,7 +66,7 @@ void	ft_init_time(t_main *args)
 {
 	struct timeval	tv;
 
-	gettimeofday(&tv, NULL);
+	gettimeofday(&tv, 0);
 	args->start_time = ft_gettime();
 	return ;
 }
@@ -89,7 +83,7 @@ int	ft_init_semaphore(t_main *args)
 		|| args->sem_print == SEM_FAILED
 		|| args->sem_finished == SEM_FAILED)
 	{
-		printf("Semaphore error %s\n", strerror(errno));
+		ft_error("Semaphore error", "");
 		return (1);
 	}
 	return (0);
