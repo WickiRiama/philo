@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:39:04 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/09 17:57:18 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:12:43 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PHILO_H
 
 # include <pthread.h>
-# include <sys/time.h>
 
 typedef struct s_main
 {
@@ -44,7 +43,6 @@ typedef struct s_philo
 
 int			ft_atoi_philo(char *str);
 void		ft_clean(t_philo **philos, t_main *args, pthread_t *tab);
-void		ft_died(t_philo *philo);
 int			ft_eat(t_philo *philos);
 void		ft_error(char *str1, char *str2);
 long int	ft_gettime(void);

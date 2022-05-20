@@ -6,11 +6,11 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 12:16:40 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/09 18:02:57 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:13:24 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <sys/time.h>
 #include "philo.h"
 
 int	ft_parse(t_main *args, int ac, char **av)

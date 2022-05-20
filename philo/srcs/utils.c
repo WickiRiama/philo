@@ -6,12 +6,13 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:32:13 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/12 18:26:33 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:13:19 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/time.h>
 #include "philo.h"
 
 int	ft_strlen(char *str)

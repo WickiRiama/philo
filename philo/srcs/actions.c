@@ -6,11 +6,10 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 15:18:03 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/12 18:56:28 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:09:14 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "philo.h"
 
 int	ft_eat(t_philo *philos)

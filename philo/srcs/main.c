@@ -6,14 +6,11 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:37:26 by mriant            #+#    #+#             */
-/*   Updated: 2022/05/12 18:44:21 by mriant           ###   ########.fr       */
+/*   Updated: 2022/05/20 12:10:27 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <stdio.h>
 #include "philo.h"
 
 void	*ft_philo(void *philos_void)
